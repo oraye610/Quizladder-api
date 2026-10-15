@@ -60,11 +60,22 @@ Base URL: `http://localhost:3001/api/v1`
 
 ## What "completed" means in my game
 
-[One or two sentences: when does a player count as having completed a game? For example: "A player completed the game when they answered every question, even if some answers were wrong or timed out."]
+A player is considered to have completed the game upon landing exactly on tile 100 of the Snakes and Ladders board, with any roll exceeding 100 causing the player to move backward from tile 100. The player's `finished_at` timestamp is recorded upon completion. The game session is marked as `FINISHED` when the top three players have completed the game or when the host manually ends the session.
+
+All players who finish receive a score of 100. Their ranks are determined by the order in which they reach tile 100, with the first finisher ranked 1, the second ranked 2, and so on. Players who do not finish are assigned no rank and receive a score equal to their final board position.
 
 ## Tables
 
-[List your tables, one line each, in the order of your migrations.]
+1.users (library accounts, from Design Change Notice 01)
+2.hosts
+3.question_sets
+4.questions
+5.answers
+6.boards
+7.tiles
+8.game_sessions
+9.players (one seat per account per game: UNIQUE (session_id, user_id))
+10.turns
 
 ## Database scripts
 
