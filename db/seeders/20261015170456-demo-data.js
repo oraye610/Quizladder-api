@@ -335,7 +335,7 @@ module.exports = {
           question_set_id: digitalSet,
           board_id: board5,
           join_code: '615824',
-          status: 'CLOSED',
+          status: 'FINISHED',
           created_at: at('2026-10-17T03:00:00Z'),
           started_at: at('2026-10-17T03:05:00Z'),
           finished_at: at('2026-10-17T03:30:00Z'),
@@ -421,7 +421,7 @@ module.exports = {
           joined_at: at('2026-10-16T02:03:00Z'),
         },
 
-        // CLOSED GAME
+        // FINISHED GAME
         {
           session_id: digitalGame,
           user_id: noah,
