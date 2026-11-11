@@ -10,4 +10,10 @@
 //   },
 //
 // A constraint that is not listed here still answers 409, with the code CONFLICT.
-module.exports = {};
+module.exports = {
+  questions_question_set_id_fkey: {
+    status: 409,
+    code: 'QUESTION_SET_HAS_QUESTIONS',
+    message: 'Cannot delete this question set because it still has questions.',
+  },
+};
