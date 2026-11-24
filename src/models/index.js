@@ -13,9 +13,11 @@ const sequelize = new Sequelize(
 
 // Week 11: load your models here, one line each, then add their associations.
 // Example:
-//   const User = require('./user')(sequelize, DataTypes);
+const User = require('./user')(sequelize, DataTypes);
+const QuestionSet = require('./question-set')(sequelize, DataTypes);
+const Host = require('./host')(sequelize, DataTypes);
 //   const Player = require('./player')(sequelize, DataTypes);
 //   User.hasMany(Player, { foreignKey: 'user_id' });
 //   Player.belongsTo(User, { foreignKey: 'user_id' });
 
-module.exports = { sequelize, Sequelize, DataTypes };
+module.exports = { sequelize, Sequelize, DataTypes,User, QuestionSet, Host };
