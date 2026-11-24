@@ -79,8 +79,11 @@ module.exports = {
         { username: HOST_USERNAME, password_hash: 'demo-only-not-a-real-hash' },
       ]);
 
-      const [questionSet] = await insert('question_sets', [
-        { name: QUESTION_SET_NAME }
+     const [questionSet] = await insert('question_sets', [
+        {
+          name: QUESTION_SET_NAME,
+          host_id: host.host_id,
+        }
       ]);
 
       const questionData = [
@@ -223,9 +226,18 @@ module.exports = {
 
       // 2. ADDITIONAL QUESTION SETS
       const extraSets = await insert('question_sets', [
-        { name: 'General Knowledge' },
-        { name: 'Computer Science' },
-        { name: 'Digital Literacy' },
+        {
+          name: 'General Knowledge',
+          host_id: host.host_id,
+        },
+        {
+          name: 'Computer Science',
+          host_id: host.host_id,
+        },
+        {
+          name: 'Digital Literacy',
+          host_id: host.host_id,
+        },
       ]);
 
       const [generalSet, computerSet, digitalSet] =
