@@ -57,32 +57,22 @@ async function joinOrRejoin(code, data, user) {
     );
   }
 
-  try {
-    const player = await playerRepository.create({
-      session_id: session.session_id,
-      user_id: user.user_id,
-      nickname,
-      avatar_color: avatarColor,
-      position: 1,
-      finish_position: null,
-      finished_at: null,
-      joined_at: new Date(),
-    });
+  // Let database constraint errors reach the global error handler.
+  const player = await playerRepository.create({
+    session_id: session.session_id,
+    user_id: user.user_id,
+    nickname,
+    avatar_color: avatarColor,
+    position: 1,
+    finish_position: null,
+    finished_at: null,
+    joined_at: new Date(),
+  });
 
-    return {
-      player,
-      isRejoin: false,
-    };
-  } catch (error) {
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      throw conflict(
-        'PLAYER_ALREADY_EXISTS',
-        'This nickname, avatar color, or user is already assigned in this game.'
-      );
-    }
-
-    throw error;
-  }
+  return {
+    player,
+    isRejoin: false,
+  };
 }
 
 async function listBySession(code) {
