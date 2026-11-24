@@ -4,7 +4,6 @@
 const { matchedData } = require('express-validator');
 const questionSetService = require('../services/question-set.service');
 
-// Only return the fields needed by the API.
 function toJson(questionSet) {
   return {
     question_set_id: questionSet.question_set_id,
@@ -37,7 +36,10 @@ async function create(req, res) {
     locations: ['body'],
   });
 
-  const questionSet = await questionSetService.create(data);
+  const questionSet = await questionSetService.create({
+    ...data,
+    host_id: req.user.host_id,
+  });
 
   res.status(201).json(toJson(questionSet));
 }
@@ -52,7 +54,11 @@ async function update(req, res) {
     locations: ['body'],
   });
 
-  const questionSet = await questionSetService.update(id, changes);
+  const questionSet = await questionSetService.update(
+    id,
+    req.user.host_id,
+    changes
+  );
 
   res.status(200).json(toJson(questionSet));
 }

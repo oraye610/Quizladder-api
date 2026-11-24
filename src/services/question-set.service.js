@@ -2,7 +2,7 @@
 'use strict';
 
 const questionSetRepository = require('../repositories/question-set.repository');
-const { notFound } = require('../errors/app-error');
+const { notFound, forbidden } = require('../errors/app-error');
 
 async function list() {
   return questionSetRepository.findAll();
@@ -25,8 +25,12 @@ async function create(data) {
   return questionSetRepository.create(data);
 }
 
-async function update(id, changes) {
+async function update(id, hostId, changes) {
   const questionSet = await get(id);
+
+  if (String(questionSet.host_id) !== String(hostId)) {
+    throw forbidden('You do not own this question set.');
+  }
 
   return questionSetRepository.update(questionSet, changes);
 }

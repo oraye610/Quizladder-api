@@ -9,9 +9,8 @@ const requireUser = require('../middlewares/require-user');
 
 const router = Router();
 
-// Require an authenticated user.
-// Host authorization will be aligned with the QuizLadder host setup.
-router.use(requireUser());
+// Only authenticated HOST users can access question sets.
+router.use(requireUser('HOST'));
 
 router.get('/', controller.list);
 

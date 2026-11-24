@@ -13,6 +13,15 @@ function findById(id) {
   return QuestionSet.findByPk(id);
 }
 
+function findByIdAndHost(id, hostId) {
+  return QuestionSet.findOne({
+    where: {
+      question_set_id: id,
+      host_id: hostId,
+    },
+  });
+}
+
 function create(data) {
   return QuestionSet.create(data);
 }
@@ -28,6 +37,7 @@ function remove(questionSet) {
 module.exports = {
   findAll,
   findById,
+  findByIdAndHost,
   create,
   update,
   remove,

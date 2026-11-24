@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      host_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+          model: 'hosts',
+          key: 'host_id',
+        },
+      },
     },
     {
       tableName: 'question_sets',
