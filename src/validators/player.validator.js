@@ -16,8 +16,8 @@ const joinRules = [
     .trim()
     .notEmpty()
     .withMessage('Nickname cannot be empty.')
-    .isLength({ max: 30 })
-    .withMessage('Nickname must not exceed 30 characters.'),
+    .isLength({ min: 2, max: 30 })
+    .withMessage('Nickname must be between 2 and 30 characters.'),
 
   body('avatar_color')
     .trim()
