@@ -58,6 +58,38 @@ Base URL: `http://localhost:3001/api/v1`
 | GET | /game-info | Slug, name, group, developer, description, player limits, version | 200 |
 | GET | /results | Finished games, every player, and the top 3. Needs the `X-Hub-Key` header. Optional `?since=` | 200 (401 without the key) |
 
+### Module 1 — Question Sets
+
+| HTTP Method | Endpoint | Authorized Caller | Description |
+|---|---|---|---|
+| POST | `/question-sets` | Host | Create a question set |
+| GET | `/question-sets` | Host | List question sets |
+| GET | `/question-sets/:id` | Host | Get a question set |
+| PATCH | `/question-sets/:id` | Owner Host | Update a question set |
+
+### Module 2 — Sessions and Players
+
+| HTTP Method | Endpoint | Authorized Caller | Description |
+|---|---|---|---|
+| POST | `/sessions` | Host | Create a game session |
+| GET | `/sessions/:code` | Public / Any caller | Read a game using its join code |
+| PATCH | `/sessions/:code` | Host | Change the game status |
+| POST | `/sessions/:code/players` | Player | Join a game session |
+
+### Authentication
+
+The API uses the `X-Demo-User` header for demo authentication.
+
+**Example:**
+
+```http
+X-Demo-User: librarian
+```
+
+**Demo Host Accounts:**
+- `librarian`
+- `librarian2`
+
 ## What "completed" means in my game
 
 A player is considered to have completed the game upon landing exactly on tile 100 of the Snakes and Ladders board, with any roll exceeding 100 causing the player to move backward from tile 100. The player's `finished_at` timestamp is recorded upon completion. The game session is marked as `FINISHED` when the top three players have completed the game or when the host manually ends the session.
@@ -87,3 +119,4 @@ All players who finish receive a score of 100. Their ranks are determined by the
 | npm run db:check | Counts the rows in every table |
 | npm run db:reset | Empties the database, rebuilds every table and reloads the seed data |
 | npm run check | Runs the same automatic check that GitHub runs after every push |
+
