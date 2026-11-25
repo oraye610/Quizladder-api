@@ -6,15 +6,22 @@ const hostRepository = require('../repositories/host.repository');
 const { User } = require('../models');
 
 if (env.nodeEnv === 'production') {
-  throw new Error('current-user.js is the Week 11 stand-in. Replace it before production.');
+  throw new Error(
+    'current-user.js is the Week 11 stand-in. Replace it before production.'
+  );
 }
 
 async function currentUser(req, res, next) {
   try {
     const demoUser = req.get('X-Demo-User');
 
+    console.log('\n========== CURRENT USER DEBUG ==========');
+    console.log('X-Demo-User:', demoUser);
+
     if (!demoUser) {
       req.user = null;
+      console.log('REQ.USER: null (no demo user)');
+      console.log('========================================\n');
       return next();
     }
 
@@ -28,6 +35,9 @@ async function currentUser(req, res, next) {
         role: 'HOST',
       };
 
+      console.log('IDENTIFIED AS HOST:', req.user);
+      console.log('========================================\n');
+
       return next();
     }
 
@@ -35,6 +45,11 @@ async function currentUser(req, res, next) {
     const user = await User.findOne({
       where: { school_id: demoUser },
     });
+
+    console.log(
+      'DATABASE USER:',
+      user ? user.toJSON() : 'USER NOT FOUND'
+    );
 
     req.user = user
       ? {
@@ -45,8 +60,12 @@ async function currentUser(req, res, next) {
         }
       : null;
 
+    console.log('FINAL REQ.USER:', req.user);
+    console.log('========================================\n');
+
     return next();
   } catch (error) {
+    console.error('CURRENT USER MIDDLEWARE ERROR:', error);
     return next(error);
   }
 }

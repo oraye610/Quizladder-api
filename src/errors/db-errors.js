@@ -1,3 +1,4 @@
+
 'use strict';
 
 // Reads the name of the database constraint that an insert, update or delete broke.
@@ -21,7 +22,7 @@ function constraintOf(error) {
 
   if (
     parent &&
-    ['23001', '23503'].includes(parent.code) &&
+    ['23505', '23503', '23514', '23P01', '23001'].includes(parent.code) &&
     parent.constraint
   ) {
     return parent.constraint;
